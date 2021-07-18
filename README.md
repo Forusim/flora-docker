@@ -30,4 +30,4 @@ On first start with recommended `-e KEYS=type`:
 * Open docker shell `docker exec -it <containerid> sh`
 * Check synchronization `flora show -s -c`
 * Check farming `flora farm summary`
-* Check balance `flora wallet show summary` 
+* Check balance `flora wallet show` 
