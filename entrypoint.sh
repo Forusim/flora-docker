@@ -22,6 +22,8 @@ if [[ $(flora keys show | wc -l) -lt 5 ]]; then
     else
       flora init && flora keys add -f ${keys}
     fi
+    
+    sed -i 's/localhost/127.0.0.1/g' ~/.flora/mainnet/config/config.yaml
 else
     for p in ${plots_dir//:/ }; do
         mkdir -p ${p}
@@ -30,8 +32,6 @@ else
         fi
         flora plots add -d ${p}
     done
-
-    sed -i 's/localhost/127.0.0.1/g' ~/.flora/mainnet/config/config.yaml
 
     if [[ ${farmer} == 'true' ]]; then
       flora start farmer-only
@@ -48,4 +48,13 @@ else
     fi
 fi
 
-while true; do sleep 30; done;
+finish () {
+    echo "$(date): Shutting down flora"
+    flora stop all
+    exit 0
+}
+
+trap finish SIGTERM SIGINT SIGQUIT
+
+sleep infinity &
+wait $!
