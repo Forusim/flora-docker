@@ -3,8 +3,6 @@ FROM ubuntu:latest
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG BRANCH="main"
 
-EXPOSE 18644
-
 ENV keys="generate"
 ENV harvester="false"
 ENV farmer="false"
@@ -22,6 +20,7 @@ RUN git clone --branch ${BRANCH} https://github.com/Flora-Network/flora-blockcha
 
 ENV PATH=/flora-blockchain/venv/bin/:$PATH
 
+EXPOSE 18644
 WORKDIR /flora-blockchain
 
 COPY ./entrypoint.sh entrypoint.sh
